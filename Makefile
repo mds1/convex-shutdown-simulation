@@ -1,4 +1,4 @@
 all    :; dapp build
 clean  :; dapp clean
-test   :; dapp test
+test   :; dapp test --rpc-url ${ETH_RPC_URL}
 deploy :; dapp create Convex

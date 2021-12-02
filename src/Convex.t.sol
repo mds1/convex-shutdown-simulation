@@ -3,20 +3,25 @@ pragma solidity ^0.8.6;
 
 import "ds-test/test.sol";
 
-import "./Convex.sol";
+interface Hevm {
+  function store(address c, bytes32 loc, bytes32 val) external;
+}
+
+interface IConvex {
+  function owner() external view returns (address);
+  function shutdownSystem() external;
+}
 
 contract ConvexTest is DSTest {
-    Convex convex;
+  Hevm constant hevm = Hevm(address(uint160(uint256(keccak256('hevm cheat code')))));
+  IConvex convex = IConvex(0xF403C135812408BFbE8713b5A23a04b3D48AAE31);
 
-    function setUp() public {
-        convex = new Convex();
-    }
+  function testShutdownCost() public {
+    hevm.store(address(convex), bytes32(uint256(4)), bytes32(uint256(uint160(address(this)))));
+    assertEq(convex.owner(), address(this));
 
-    function testFail_basic_sanity() public {
-        assertTrue(false);
-    }
-
-    function test_basic_sanity() public {
-        assertTrue(true);
-    }
+    uint256 _startGas = gasleft();
+    convex.shutdownSystem();
+    emit log_named_uint("shutdown gas used", _startGas - gasleft());
+  }
 }
