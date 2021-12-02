@@ -6,3 +6,5 @@ To run tests, make sure you have an environment variable called `ETH_RPC_URL`. T
 - Hardhat: `yarn` then `yarn hardhat test --no-compile`
 - Dapptools: `dapp update` then `dapp test --rpc-url $ETH_RPC_URL`
 - Foundry: `forge test --rpc-url $ETH_RPC_URL`
+
+Installation instructions for forge and dapptools can be found [here](https://github.com/gakonst/foundry/) and [here](https://github.com/dapphub/dapptools/) respectively.
