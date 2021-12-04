@@ -6,7 +6,7 @@ import Ganache from "ganache";
 
 const url = "mainnet";
 const blockGasLimit = "0x2625A00"; // 40,000,000
-const blockNumber = 13700000;
+const blockNumber = 13724056;
 const defaultBalance = "0xffffffffffffffffffffff";
 const targetBalance = "0xffffffffffffffffffff";
 const convexAddress = "0xF403C135812408BFbE8713b5A23a04b3D48AAE31";
