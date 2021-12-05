@@ -4,7 +4,7 @@ const chalk: any = require("chalk");
 import * as ethers from "ethers";
 import Ganache from "ganache";
 
-const url = "mainnet";
+const url = process.env["ETH_RPC_URL"] || "mainnet";
 const blockGasLimit = "0x2625A00"; // 40,000,000
 const blockNumber = 13724056;
 const defaultBalance = "0xffffffffffffffffffffff";
