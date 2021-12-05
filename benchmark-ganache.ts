@@ -5,6 +5,9 @@ import * as ethers from "ethers";
 import Ganache from "ganache";
 
 const url = process.env["ETH_RPC_URL"] || "mainnet";
+const deleteCache = !!(
+  process.env["DELETE_CACHE"] && process.env["DELETE_CACHE"] !== "false"
+);
 const blockGasLimit = "0x1C9C380"; // 30,000,000
 const blockNumber = 13724056;
 const defaultBalance = "0xffffffffffffffffffffff";
@@ -31,7 +34,7 @@ async function main(): Promise<void> {
     blockNumber,
     blockGasLimit,
     defaultBalance,
-    deleteCache: false
+    deleteCache
   });
 
   const convex = new ethers.Contract(convexAddress, convexAbi, provider);
