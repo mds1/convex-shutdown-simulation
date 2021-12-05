@@ -5,7 +5,7 @@ import * as ethers from "ethers";
 import Ganache from "ganache";
 
 const url = process.env["ETH_RPC_URL"] || "mainnet";
-const blockGasLimit = "0x2625A00"; // 40,000,000
+const blockGasLimit = "0x1C9C380"; // 30,000,000
 const blockNumber = 13724056;
 const defaultBalance = "0xffffffffffffffffffffff";
 const targetBalance = "0xffffffffffffffffffff";
@@ -60,7 +60,7 @@ async function main(): Promise<void> {
   console.time("simulate-shutdown");
   console.group();
   const tx = await convex.connect(owner).shutdownSystem({
-    gasLimit: "0x25317C0" // 39,000,000
+    gasLimit: blockGasLimit
   });
 
   const receipt = await provider.waitForTransaction(tx.hash);
