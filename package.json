@@ -5,11 +5,8 @@
   "repository": "https://github.com/mds1/convex-shutdown-simulation",
   "author": "Matt Solomon <matt@mattsolomon.dev>",
   "license": "MIT",
-  "scripts": {
-    "benchmark:ganache": "ts-node ./benchmark-ganache.ts"
-  },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-ethers": "^2.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "chai": "^4.3.4",
     "chalk": "^4",
