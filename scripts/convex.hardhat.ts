@@ -1,4 +1,5 @@
 import { ethers, network } from 'hardhat';
+import '@nomiclabs/hardhat-ethers';
 
 async function main(): Promise<void> {
   // Impersonate owner
