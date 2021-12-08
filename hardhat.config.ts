@@ -10,7 +10,7 @@ const config: HardhatUserConfig = {
       chainId: 31337,
       gas: Number(process.env.GAS_LIMIT), // set to block gas limit, which avoids calls to eth_estimateGas (results in same behavior as dapptools/foundry)
       forking: {
-        url: process.env.ETH_RPC_URL,
+        url: String(process.env.ETH_RPC_URL),
         blockNumber: Number(process.env.FORK_BLOCK),
       },
     },
