@@ -18,5 +18,4 @@ uses about 16M gas and performs a number of token transfers
 
 ## Tips
 
-- Dapptools seems to fail when run on macOS, as explained in [this](https://github.com/dapphub/dapptools/issues/876), so you may need to skip that script on macOS
 - Set `export CLEAR_CACHE=1` in your `.env` file to clear the Ganache and Hardhat caches
