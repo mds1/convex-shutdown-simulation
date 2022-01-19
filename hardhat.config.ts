@@ -13,6 +13,7 @@ const config: HardhatUserConfig = {
         url: String(process.env.ETH_RPC_URL),
         blockNumber: Number(process.env.FORK_BLOCK),
       },
+      loggingEnabled: true,
     },
   },
   mocha: {

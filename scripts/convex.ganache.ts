@@ -89,7 +89,7 @@ async function prepareGanache({
       defaultBalance: ethers.utils.formatEther(defaultBalance),
     },
     logging: {
-      quiet: true,
+      quiet: false,
     },
     legacyInstamine: true,
   });
