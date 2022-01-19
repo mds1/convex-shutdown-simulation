@@ -51,6 +51,7 @@ async function main(): Promise<void> {
   const tx = await convex.connect(owner).shutdownSystem({ gasLimit: blockGasLimit });
 
   const receipt = await provider.waitForTransaction(tx.hash);
+  assert.ok(receipt.status, `transaction failed. receipt: ${JSON.stringify(receipt)}`);
   console.groupEnd();
   console.timeEnd('simulate-shutdown');
   console.log('');
