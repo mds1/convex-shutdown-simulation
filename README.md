@@ -19,3 +19,4 @@ uses about 16M gas and performs a number of token transfers
 ## Tips
 
 - Set `export CLEAR_CACHE=1` in your `.env` file to clear the Ganache and Hardhat caches
+- Consider running the benchmarks via Docker. See the comment header in [the Dockerfile](./Dockerfile) for details.
