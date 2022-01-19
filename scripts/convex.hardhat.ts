@@ -1,3 +1,5 @@
+import * as assert from 'assert';
+
 import { ethers, network } from 'hardhat';
 import '@nomiclabs/hardhat-ethers';
 
@@ -15,6 +17,7 @@ async function main(): Promise<void> {
   // Execute transaction
   const tx = await convex.connect(owner).shutdownSystem();
   const receipt = await ethers.provider.getTransactionReceipt(tx.hash);
+  assert.ok(receipt.status, `transaction failed. receipt: ${JSON.stringify(receipt)}`);
 }
 
 main()
