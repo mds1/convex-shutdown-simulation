@@ -13,9 +13,10 @@
 #   docker run --entrypoint /bin/bash sim -c "rm -rf cache && make benchmark-hardhat"
 #
 # BEWARE: This image should not be published because it will contain traces of
-# your Alchemy API key. (See https://stackoverflow.com/a/40762010/406289)
-# Future work can take advantage of Docker's support for secrets, but
-# unless/until there's a need to publish this image, that would be overkill.
+# your RPC url, which likely contains your private API key secret. (See
+# https://stackoverflow.com/a/40762010/406289 .) Future work can take advantage
+# of Docker's support for secrets, but unless/until there's a need to publish
+# this image, that would be overkill.
 
 FROM debian
 
