@@ -4,7 +4,7 @@
 # that running the image will execute benchmarks with a "warm cache". For
 # example:
 #
-#   docker --build-arg ALCHEMY_API_KEY=... -t sim .
+#   docker build --build-arg ALCHEMY_API_KEY=... -t sim .
 #   docker run sim benchmark-hardhat
 #
 # BEWARE: This image should not be published because it will contain traces of
