@@ -4,7 +4,7 @@
 # that running the image will execute benchmarks with a "warm cache". For
 # example:
 #
-#   docker build --build-arg ALCHEMY_API_KEY=... -t sim .
+#   docker build --build-arg ETH_RPC_URL=... -t sim .
 #   docker run sim benchmark-hardhat
 #
 # BEWARE: This image should not be published because it will contain traces of
@@ -14,10 +14,10 @@
 
 FROM debian
 
-ARG ALCHEMY_API_KEY
+ARG ETH_RPC_URL
 
-RUN if [ -z "${ALCHEMY_API_KEY}" ]; then \
-      echo build argument ALCHEMY_API_KEY required; \
+RUN if [ -z "${ETH_RPC_URL}" ]; then \
+      echo build argument ETH_RPC_URL required; \
       exit 1; \
     fi && \
     apt-get update && \
@@ -43,7 +43,7 @@ WORKDIR convex-shutdown-simulation
 
 RUN yarn && \
     cp .env.example .env && \
-    sed -i "s!yourAlchemyApiKey!${ALCHEMY_API_KEY}!" .env && \
+    sed -i "s!ETH_RPC_URL=.*!ETH_RPC_URL=${ETH_RPC_URL}!" .env && \
     curl -L https://raw.githubusercontent.com/gakonst/foundry/master/foundryup/install | bash
 # Don't combine these sequential RUN commands because we need fresh shell
 # instances in order for each install script to take effect.
