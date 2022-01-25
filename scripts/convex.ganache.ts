@@ -31,7 +31,7 @@ async function main(): Promise<void> {
   });
 
   const convex = new ethers.Contract(convexAddress, convexAbi, provider);
-  const ownerAddress = await convex.owner();
+  const ownerAddress = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK) });
 
   await fundAccounts({ provider, accounts: [convexAddress, ownerAddress], amount: targetBalance });
 
@@ -111,7 +111,7 @@ async function fundAccounts({ provider, accounts, amount }: FundAccountsOptions)
 
   for (const address of accounts) {
     // simple contract that just selfdestructs funds to address constructor arg
-    const sendBytecode = '0x60806040526040516100c13803806100c18339818101604052810190602391906098565b8073ffffffffffffffffffffffffffffffffffffffff16ff5b600080fd5b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000606a826041565b9050919050565b6078816061565b8114608257600080fd5b50565b6000815190506092816071565b92915050565b60006020828403121560ab5760aa603c565b5b600060b7848285016085565b9150509291505056fe';
+    const sendBytecode = '0x60806040526040516100c13803806100c18339818101604052810190602391906098565b8073ffffffffffffffffffffffffffffffffffffffff16ff5b600080fd5b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000606a826041565b9050919050565b6078816061565b8114608257600080fd5b50565b6000815190506092816071565b92915050565b60006020828403121560ab5760aa603c565b5b600060b7848285016085565b9150509291505056fe'; // prettier-ignore
 
     const txHash = await provider.send('eth_sendTransaction', [
       {
