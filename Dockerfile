@@ -12,6 +12,15 @@
 #
 #   docker run --entrypoint /bin/bash sim -c "rm -rf cache && make benchmark-hardhat"
 #
+# You can also copy the cache from the built container to your docker host, so
+# that it will be incorporated into a subsequent build of the image, allowing a
+# "warm cache" run in a freshly built image. To do this, use something like:
+#
+#   id=$(docker create sim)
+#   docker cp $id:/home/user/convex-shutdown-simulation/cache .
+#   docker rm -v $id
+#   # source: https://stackoverflow.com/a/31316636/406289
+#
 # BEWARE: This image should not be published because it will contain traces of
 # your RPC url, which likely contains your private API key secret. (See
 # https://stackoverflow.com/a/40762010/406289 .) Future work can take advantage
