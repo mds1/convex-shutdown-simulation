@@ -55,22 +55,26 @@ ENV SHELL=/bin/bash
 SHELL ["/bin/bash", "-c"]
 
 WORKDIR convex-shutdown-simulation
-COPY --chown=user:user . .
 USER root
 RUN chown -R user:user /home/user
 USER user
+COPY --chown=user:user package.json .
+COPY --chown=user:user yarn.lock .
 
 RUN ln -s ~/.bashrc ~/.profile
 RUN yarn && \
-    cp .env.example .env && \
-    sed -i "s!ETH_RPC_URL=.*!ETH_RPC_URL=${ETH_RPC_URL}!" .env && \
     curl -L https://raw.githubusercontent.com/gakonst/foundry/master/foundryup/install | bash
 # Don't combine these sequential RUN commands because we need fresh shell
 # instances in order for each install script to take effect.
 RUN foundryup && \
     curl -L https://nixos.org/nix/install | bash
 RUN curl -L https://dapp.tools/install | bash
+COPY --chown=user:user .git .git
 RUN dapp update
+
+COPY --chown=user:user . .
+RUN cp .env.example .env && \
+    sed -i "s!ETH_RPC_URL=.*!ETH_RPC_URL=${ETH_RPC_URL}!" .env
 
 # TODO: Benchmark ganache too, once it's fixed.
 # (See https://github.com/mds1/convex-shutdown-simulation/pull/4)
