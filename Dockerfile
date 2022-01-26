@@ -31,7 +31,8 @@ RUN if [ -z "${ETH_RPC_URL}" ]; then \
     ln -s /usr/bin/yarnpkg /usr/bin/yarn
 
 # nix/dapptools don't like to install/run as root
-RUN useradd user && \
+RUN groupadd user && \
+    useradd -g user user && \
     mkdir -p -m 0755 /home/user && \
     chown user /home/user && \
     mkdir -m 0755 /nix && \
@@ -44,9 +45,13 @@ ENV BASH_ENV=/home/user/.profile
 ENV SHELL=/bin/bash
 SHELL ["/bin/bash", "-c"]
 
-RUN git clone https://github.com/mds1/convex-shutdown-simulation.git
 WORKDIR convex-shutdown-simulation
+COPY --chown=user:user . .
+USER root
+RUN chown -R user:user /home/user
+USER user
 
+RUN ln -s ~/.bashrc ~/.profile
 RUN yarn && \
     cp .env.example .env && \
     sed -i "s!ETH_RPC_URL=.*!ETH_RPC_URL=${ETH_RPC_URL}!" .env && \
