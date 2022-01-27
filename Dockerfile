@@ -4,7 +4,7 @@
 # that running the image will execute benchmarks with a "warm cache". For
 # example:
 #
-#   docker build --build-arg ETH_RPC_URL=... -t sim .
+#   docker build --build-arg -t sim .
 #   docker run sim benchmark-hardhat
 #
 # To benchmark with a cleared cache, and without having to rebuild the entire
@@ -29,13 +29,7 @@
 
 FROM debian
 
-ARG ETH_RPC_URL
-
-RUN if [ -z "${ETH_RPC_URL}" ]; then \
-      echo build argument ETH_RPC_URL required; \
-      exit 1; \
-    fi && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install --yes curl git make xz-utils yarnpkg && \
     ln -s /usr/bin/yarnpkg /usr/bin/yarn
 
@@ -73,8 +67,6 @@ COPY --chown=user:user .git .git
 RUN dapp update
 
 COPY --chown=user:user . .
-RUN cp .env.example .env && \
-    sed -i "s!ETH_RPC_URL=.*!ETH_RPC_URL=${ETH_RPC_URL}!" .env
 
 # TODO: Benchmark ganache too, once it's fixed.
 # (See https://github.com/mds1/convex-shutdown-simulation/pull/4)
