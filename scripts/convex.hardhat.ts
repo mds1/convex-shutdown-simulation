@@ -27,11 +27,10 @@ async function main(): Promise<void> {
   console.log(chalk.bold('Simulating shutdown...'));
   console.time('simulate-shutdown');
   console.group();
-  const tx = await convex.connect(owner).shutdownSystem(
-    { gasLimit: process.env.GAS_LIMIT }
-  );
+  const tx = await convex.connect(owner).shutdownSystem({ gasLimit: process.env.GAS_LIMIT });
   const receipt = await ethers.provider.getTransactionReceipt(tx.hash);
   assert.ok(receipt.status, `transaction failed. receipt: ${JSON.stringify(receipt)}`);
+  console.log('Gas used:', receipt.gasUsed.toString());
   console.groupEnd();
   console.timeEnd('simulate-shutdown');
   console.log('');

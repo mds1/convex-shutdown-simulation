@@ -33,6 +33,7 @@ async function main(): Promise<void> {
   };
   const sim = await fetchUrl(simUrl, fetchOptions);
   assert.ok(sim.transaction.status, `transaction failed. response: ${JSON.stringify(sim)}`);
+  console.log('Gas used:', sim.transaction.gas_used);
 }
 
 main()
