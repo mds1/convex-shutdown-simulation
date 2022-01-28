@@ -5,12 +5,12 @@
 # example:
 #
 #   docker build --build-arg -t sim .
-#   docker run sim benchmark-hardhat
+#   docker run -t sim benchmark-hardhat
 #
 # To benchmark with a cleared cache, and without having to rebuild the entire
 # tool environment, use something like:
 #
-#   docker run --entrypoint /bin/bash sim -c "rm -rf cache && make benchmark-hardhat"
+#   docker run --entrypoint /bin/bash -t sim -c "rm -rf cache && make benchmark-hardhat"
 #
 # You can also copy the cache from the built container to your docker host, so
 # that it will be incorporated into a subsequent build of the image, allowing a
