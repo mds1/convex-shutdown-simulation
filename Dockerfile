@@ -26,6 +26,9 @@
 # https://stackoverflow.com/a/40762010/406289 .) Future work can take advantage
 # of Docker's support for secrets, but unless/until there's a need to publish
 # this image, that would be overkill.
+#
+# Lines in this file starting with "#   " are assumed to be example usage
+# commands and are verified by ./testDockerfile.sh
 
 FROM debian
 
