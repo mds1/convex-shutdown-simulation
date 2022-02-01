@@ -71,10 +71,13 @@ RUN dapp update
 
 COPY --chown=user:user . .
 
+# The following lines can be reordered to optimize Image rebuild times. RUN
+# stable ones first, and leave unstable ones for last, so that your rebuild can
+# hit the Layer cache for the stable ones.
+RUN make benchmark-foundry
+RUN make benchmark-hardhat
+RUN make benchmark-dapptools
 # TODO: Benchmark ganache too, once it's fixed.
 # (See https://github.com/mds1/convex-shutdown-simulation/pull/4)
-RUN make benchmark-foundry && \
-    make benchmark-hardhat && \
-    make benchmark-dapptools
 
 ENTRYPOINT ["make"]
