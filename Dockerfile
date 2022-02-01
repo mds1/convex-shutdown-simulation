@@ -4,7 +4,7 @@
 # that running the image will execute benchmarks with a "warm cache". For
 # example:
 #
-#   docker build --build-arg -t sim .
+#   docker build -t sim .
 #   docker run -t sim benchmark-hardhat
 #
 # To benchmark with a cleared cache, and without having to rebuild the entire
