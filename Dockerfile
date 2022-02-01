@@ -78,7 +78,6 @@ COPY --chown=user:user . .
 RUN make benchmark-foundry
 RUN make benchmark-hardhat
 RUN make benchmark-dapptools
-# TODO: Benchmark ganache too, once it's fixed.
-# (See https://github.com/mds1/convex-shutdown-simulation/pull/4)
+RUN make benchmark-ganache
 
 ENTRYPOINT ["make"]
