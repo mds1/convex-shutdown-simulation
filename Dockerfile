@@ -28,7 +28,7 @@
 # of Docker's support for secrets, but unless/until there's a need to publish
 # this Image, that would be overkill.
 #
-# Lines in this file starting with "#   " are assumed to be example usage
+# Note: Lines in this file starting with "#   " are assumed to be example usage
 # commands and are verified by ./testDockerfile.sh
 
 FROM debian
