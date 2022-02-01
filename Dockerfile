@@ -1,7 +1,7 @@
-# Building this image will include the running of all benchmarks in a "cold
+# Building this Image will include the running of all benchmarks in a "cold
 # cache" state, and thus will take quite a bit of time (roughly 30-60 minutes,
-# with Ganache excluded).  The cache will be retained in the built image, such
-# that running the image will execute benchmarks with a "warm cache". For
+# with Ganache excluded).  The cache will be retained in the built Image, such
+# that running the Image will execute benchmarks with a "warm cache". For
 # example:
 #
 #   docker build -t sim .
@@ -13,8 +13,8 @@
 #   docker run --entrypoint /bin/bash -t sim -c "rm -rf cache && make benchmark-hardhat"
 #
 # You can also copy the cache from the built container to your docker host, so
-# that it will be incorporated into a subsequent build of the image, allowing a
-# "warm cache" run in a freshly built image. To do this, use something like:
+# that it will be incorporated into a subsequent build of the Image, allowing a
+# "warm cache" run in a freshly built Image. To do this, use something like:
 #
 #   id=$(docker create sim)
 #   docker cp $id:/home/user/convex-shutdown-simulation/cache .
@@ -22,11 +22,11 @@
 #   # source: https://stackoverflow.com/a/31316636/406289
 #   docker build -t sim .
 #
-# BEWARE: This image should not be published because it will contain traces of
+# BEWARE: This Image should not be published because it will contain traces of
 # your RPC url, which likely contains your private API key secret. (See
 # https://stackoverflow.com/a/40762010/406289 .) Future work can take advantage
 # of Docker's support for secrets, but unless/until there's a need to publish
-# this image, that would be overkill.
+# this Image, that would be overkill.
 #
 # Lines in this file starting with "#   " are assumed to be example usage
 # commands and are verified by ./testDockerfile.sh
