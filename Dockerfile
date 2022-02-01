@@ -20,6 +20,7 @@
 #   docker cp $id:/home/user/convex-shutdown-simulation/cache .
 #   docker rm -v $id
 #   # source: https://stackoverflow.com/a/31316636/406289
+#   docker build -t sim .
 #
 # BEWARE: This image should not be published because it will contain traces of
 # your RPC url, which likely contains your private API key secret. (See
