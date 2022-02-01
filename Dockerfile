@@ -22,11 +22,11 @@
 #   # source: https://stackoverflow.com/a/31316636/406289
 #   docker build -t sim .
 #
-# BEWARE: This Image should not be published because it will contain traces of
-# your RPC url, which likely contains your private API key secret. (See
-# https://stackoverflow.com/a/40762010/406289 .) Future work can take advantage
-# of Docker's support for secrets, but unless/until there's a need to publish
-# this Image, that would be overkill.
+# BEWARE: This Image should not be published because it will contain your .env
+# file, which contains your RPC url, which likely contains your private API key
+# secret. (See https://stackoverflow.com/a/40762010/406289 .) Future work can
+# take advantage of Docker's support for secrets, but unless/until there's a
+# need to publish this Image, that would be overkill.
 #
 # Note: Lines in this file starting with "#   " are assumed to be example usage
 # commands and are verified by ./testDockerfile.sh
