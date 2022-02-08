@@ -79,5 +79,6 @@ RUN make benchmark-foundry
 RUN make benchmark-hardhat
 RUN make benchmark-dapptools
 RUN make benchmark-ganache
+RUN make benchmark-tenderly
 
 ENTRYPOINT ["make"]

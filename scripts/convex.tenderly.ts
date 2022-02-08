@@ -4,12 +4,11 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import fetchUrl, { FETCH_OPT } from 'micro-ftch';
 
 async function main(): Promise<void> {
-  // TODO query this from tenderly API?
   const convexAddr = '0xF403C135812408BFbE8713b5A23a04b3D48AAE31';
   const provider = new JsonRpcProvider(process.env.ETH_RPC_URL);
   const abi = ['function owner() view external returns (address)'];
   const convex = new Contract(convexAddr, abi, provider);
-  const ownerAddr = await convex.owner();
+  const ownerAddr = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK) });
 
   // Configure tenderly request
   const baseUrl = 'https://api.tenderly.co/api/v1';
