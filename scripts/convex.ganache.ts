@@ -97,6 +97,10 @@ async function prepareGanache({
 
   const provider = new ethers.providers.Web3Provider(ganache);
 
+  // currently ganache forking doesn't update the evm time, which can affect
+  // gas usage. set it manually to be that of the fork block
+  const forkBlock = await provider.getBlock(blockNumber);
+  const time = await provider.send("evm_setTime", [forkBlock.timestamp * 1000]);
   return { ganache, provider };
 }
 
