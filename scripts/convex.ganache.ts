@@ -84,15 +84,17 @@ async function prepareGanache({
       blockNumber,
       deleteCache,
     },
-    miner: { blockGasLimit },
+    miner: { 
+      blockGasLimit, 
+      instamine: "eager" 
+    },
     wallet: {
       // ganache expects value in ETH
       defaultBalance: ethers.utils.formatEther(defaultBalance),
     },
     logging: {
       quiet: false,
-    },
-    legacyInstamine: true,
+    }
   });
 
   const provider = new ethers.providers.Web3Provider(ganache);
