@@ -14,31 +14,48 @@ const convexAddress = '0xF403C135812408BFbE8713b5A23a04b3D48AAE31';
 const convexAbi = ['function shutdownSystem() external', 'function owner() external view returns (address)'];
 
 async function main(): Promise<void> {
+  const gasValues = [];
+  const i = 0;
+  // [-5,-4,-3,-2,-1,0,1,2,3,4,5].forEach(async (i) => {
+    const blockNumberAdjusted = (i * 1000) + blockNumber;
+    const gasUsed = await shutdownSim(blockNumberAdjusted);
+    gasValues.push({blockNumber: blockNumberAdjusted, gasUsed: gasUsed});
+
+  // })
+  gasValues.forEach((data) => {
+    console.log(data);
+  });
+}
+
+async function shutdownSim(blockNumberAdjusted): Promise<ethers.BigNumber> {
   /*
    * setup
    */
 
   console.log(chalk.bold('Setting up Ganache...'));
-  console.time('setup-ganache');
+  console.time('setup-ganache-' + blockNumberAdjusted);
   console.group();
 
   const { ganache, provider } = await prepareGanache({
     url,
-    blockNumber,
+    blockNumber: blockNumberAdjusted,
     blockGasLimit,
     defaultBalance,
     deleteCache,
   });
-
+  const block = await provider.getBlock("latest");
+  console.log("block timestamp: " + block.timestamp*1000)
+  // const time = await provider.send("evm_setTime", [1638420755000]);
+  // console.log("evm_setTime Result: " + time)
   const convex = new ethers.Contract(convexAddress, convexAbi, provider);
-  const ownerAddress = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK), gasLimit: blockGasLimit });
+  const ownerAddress = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK) });
 
   await fundAccounts({ provider, accounts: [convexAddress, ownerAddress], amount: targetBalance });
 
   const owner = await unlockAddress({ provider, address: ownerAddress });
 
   console.groupEnd();
-  console.timeEnd('setup-ganache');
+  console.timeEnd('setup-ganache-' + blockNumberAdjusted);
   console.log('');
 
   /*
@@ -46,31 +63,20 @@ async function main(): Promise<void> {
    */
 
   console.log(chalk.bold('Simulating shutdown...'));
-  console.time('simulate-shutdown');
+  console.time('simulate-shutdown-' + blockNumberAdjusted);
   console.group();
-
-  // ganache uses the user's time for the block timestamp, and allows for 
-  // manually setting the block time. here we set it manually to be that of 
-  // the fork block to make sure results can be consistently reproduced (the
-  // contract method being called's gas usage depends on the timestamp). to
-  // manually set the timestamp, we get the fork  block's time, stop the miner, 
-  // send our transaction, and run evm_mine, which allows us to mine a block 
-  // and set the exact timestamp of the block
-  const forkBlock = await provider.getBlock(blockNumber);
-  // block timestamp in seconds, add one second
-  const timestamp = (forkBlock.timestamp + 1) 
-  await provider.send("miner_stop", []);
   const tx = await convex.connect(owner).shutdownSystem({ gasLimit: blockGasLimit });
-  await provider.send("evm_mine", [timestamp]);
 
   const receipt = await provider.waitForTransaction(tx.hash);
+  console.log(receipt.gasUsed)
   assert.ok(receipt.status, `transaction failed. receipt: ${JSON.stringify(receipt)}`);
   console.groupEnd();
-  console.timeEnd('simulate-shutdown');
+  console.timeEnd('simulate-shutdown-' + blockNumberAdjusted);
   console.log('');
 
-  // @ts-ignore looks like ganache has a bad typing
+  // @ts-ignore looks like ganche has a bad typing
   await ganache.disconnect();
+  return receipt.cumulativeGasUsed;
 }
 
 interface PrepareGanacheOptions {
@@ -93,7 +99,7 @@ async function prepareGanache({
 }> {
   const ganache = Ganache.provider({
     fork: {
-      url,
+      network: "mainnet",
       blockNumber,
       deleteCache,
     },
@@ -103,14 +109,14 @@ async function prepareGanache({
     },
     wallet: {
       // ganache expects value in ETH
-      defaultBalance: ethers.utils.formatEther(defaultBalance),
+      defaultBalance: Number(ethers.utils.formatEther(defaultBalance)),
     },
     logging: {
-      quiet: false,
-    }
+      quiet: true,
+    },
   });
 
-  const provider = new ethers.providers.Web3Provider(ganache);
+  const provider = new ethers.providers.Web3Provider(ganache as any);
 
   return { ganache, provider };
 }

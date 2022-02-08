@@ -31,7 +31,7 @@ async function main(): Promise<void> {
   });
 
   const convex = new ethers.Contract(convexAddress, convexAbi, provider);
-  const ownerAddress = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK), gasLimit: blockGasLimit });
+  const ownerAddress = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK) });
 
   await fundAccounts({ provider, accounts: [convexAddress, ownerAddress], amount: targetBalance });
 
@@ -48,28 +48,16 @@ async function main(): Promise<void> {
   console.log(chalk.bold('Simulating shutdown...'));
   console.time('simulate-shutdown');
   console.group();
-
-  // ganache uses the user's time for the block timestamp, and allows for 
-  // manually setting the block time. here we set it manually to be that of 
-  // the fork block to make sure results can be consistently reproduced (the
-  // contract method being called's gas usage depends on the timestamp). to
-  // manually set the timestamp, we get the fork  block's time, stop the miner, 
-  // send our transaction, and run evm_mine, which allows us to mine a block 
-  // and set the exact timestamp of the block
-  const forkBlock = await provider.getBlock(blockNumber);
-  // block timestamp in seconds, add one second
-  const timestamp = (forkBlock.timestamp + 1) 
-  await provider.send("miner_stop", []);
   const tx = await convex.connect(owner).shutdownSystem({ gasLimit: blockGasLimit });
-  await provider.send("evm_mine", [timestamp]);
 
   const receipt = await provider.waitForTransaction(tx.hash);
+  console.log(receipt.gasUsed)
   assert.ok(receipt.status, `transaction failed. receipt: ${JSON.stringify(receipt)}`);
   console.groupEnd();
   console.timeEnd('simulate-shutdown');
   console.log('');
 
-  // @ts-ignore looks like ganache has a bad typing
+  // @ts-ignore looks like ganche has a bad typing
   await ganache.disconnect();
 }
 
@@ -91,26 +79,28 @@ async function prepareGanache({
   ganache: ReturnType<typeof Ganache.provider>;
   provider: ethers.providers.JsonRpcProvider;
 }> {
-  const ganache = Ganache.provider({
-    fork: {
-      url,
-      blockNumber,
-      deleteCache,
-    },
-    miner: { 
-      blockGasLimit, 
-      instamine: "eager" 
-    },
-    wallet: {
-      // ganache expects value in ETH
-      defaultBalance: ethers.utils.formatEther(defaultBalance),
-    },
-    logging: {
-      quiet: false,
-    }
-  });
+  // const options = {
+  //   fork: {
+  //     network: "mainnet",
+  //     blockNumber,
+  //     deleteCache,
+  //   },
+  //   miner: { 
+  //     blockGasLimit, 
+  //     instamine: "eager" 
+  //   },
+  //   wallet: {
+  //     // ganache expects value in ETH
+  //     defaultBalance: Number(ethers.utils.formatEther(defaultBalance)),
+  //   },
+  //   logging: {
+  //     quiet: true,
+  //   },
+  // }
+  // const ganache = Ganache.provider();
 
-  const provider = new ethers.providers.Web3Provider(ganache);
+  const ganache = {disconnect: ()=>{}} as any;
+  const provider = new ethers.providers.WebSocketProvider("ws://localhost:8545");
 
   return { ganache, provider };
 }
