@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 const credentials = process.env.BN_API_KEY + ':' + process.env.BN_SECRET_KEY
 const bnEndPoint = 'https://api.blocknative.com/simulate'
 
-const gasSupplied = 300000000 // Example high gas to succeed EVM execution, **currently no estimation**
+const gasSupplied = 300000000 // Example high gas to succeed EVM execution, **currently no estimation** // TODO ALEX: env var this
 
 async function main(): Promise<void> {
 
@@ -20,7 +20,7 @@ async function main(): Promise<void> {
     network: "main",
     transaction: {
       to: "0xF403C135812408BFbE8713b5A23a04b3D48AAE31",
-      from: "0xa3C5A1e09150B75ff251c1a7815A07182c3de2FB",
+      from: "0x3ce6408f923326f81a7d7929952947748180f1e6", // TODO ALEX: get this owner from ethers like the other scripts - easier to do
       gas: gasSupplied,
       gasPrice: 0,
       input: "0x354af919",
