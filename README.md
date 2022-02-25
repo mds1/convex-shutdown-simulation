@@ -30,6 +30,7 @@ Notes:
 - Foundry does not cache RPC results to disk between runs, so the "Local, With Cache" column has been left as N/A
 - Ganache results are currently not shown due to a bug documented in issue [#7](https://github.com/mds1/convex-shutdown-simulation/issues/7)
 - If Tenderly returns a 400, it's because the simulation timed out which may happen if they don't have data cached on the servers. Attempting to run the simulation in their UI seems to resolve this
+- Blocknative simulates on tip block height currently, with archival node simulations are planned for historical simulation.
 - Local benchmarks were run against a local Erigon node on macOS 11.6.2 with a 2.3 GHz 8-Core Intel Core i9 and 32 GB 2667 MHz DDR4 (The goal is to benchmark tool performance, which is why a local node is used&mdash;if benchmarking against a remote node such as Infura or Alchemy, network calls become the driver of execution time)
 - Just because gas used differs between tools does not mean only one is correct. For example, Foundry and Dapptools exclude the 21,064 intrinsic gas from the reported gas used, but other tools may not. However, at this time it is not known which value is the truth value. Similarly, dapptools does not include refunds in their reported gas used
 

@@ -1,12 +1,20 @@
-import fetch from 'node-fetch'
+import fetchUrl, { FETCH_OPT } from 'micro-ftch'
+import { Contract } from '@ethersproject/contracts'
+import { JsonRpcProvider } from '@ethersproject/providers'
 
 // Add your keys via .env
 const credentials = process.env.BN_API_KEY + ':' + process.env.BN_SECRET_KEY
 const bnEndPoint = 'https://api.blocknative.com/simulate'
 
-const gasSupplied = 300000000 // Example high gas to succeed EVM execution, **currently no estimation** // TODO ALEX: env var this
-
 async function main(): Promise<void> {
+  // Get owner address - gracefully copied homework from the Tenderly benchmark script :^)
+  const convexAddr = '0xF403C135812408BFbE8713b5A23a04b3D48AAE31'
+  const provider = new JsonRpcProvider(process.env.ETH_RPC_URL)
+  const abi = ['function owner() view external returns (address)']
+  const convex = new Contract(convexAddr, abi, provider)
+
+  // We use current blocknumber owner as Blocknative simulates on tip block number as of now
+  const ownerAddr = await convex.owner()
 
   // Double check the keys were given above!
   if (credentials === ':') {
@@ -15,45 +23,51 @@ async function main(): Promise<void> {
 
   // Information to how tx-preview works is here:
   // https://docs.blocknative.com/simulation-platform/transaction-preview-api
-  const body = {
-    system: "ethereum",
-    network: "main",
-    transaction: {
-      to: "0xF403C135812408BFbE8713b5A23a04b3D48AAE31",
-      from: "0x3ce6408f923326f81a7d7929952947748180f1e6", // TODO ALEX: get this owner from ethers like the other scripts - easier to do
-      gas: gasSupplied,
-      gasPrice: 0,
-      input: "0x354af919",
-      value: 0
+  const fetchOptions = <Partial<FETCH_OPT>>{
+    method: 'POST',
+    type: 'json',
+    full: true,
+    expectStatusCode: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'credentials': credentials
+    },
+    data: {
+      system: "ethereum",
+      network: "main",
+      transaction: {
+        to: convexAddr,
+        from: ownerAddr,
+        gas: Number(process.env.GAS_LIMIT),
+        gasPrice: 0,
+        input: "0x354af919",
+        value: 0
+      }
     }
   }
 
   console.time('Simulate-shutdown')
 
-  // cURL the simulated call to Convex's 'systemShutdown' method
-  const response = await fetch(bnEndPoint, {
-    method: 'post',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-      'credentials': credentials
-    }
-  })
-  console.timeEnd('Simulate-shutdown')
-  const data = await response.json()
+  // Fetch simulation via Blocknative RESTful endpoint
+  const response = await fetchUrl(bnEndPoint, fetchOptions)
 
-  // Check for errors
   if (response.status !== 200) {
-    console.log(`Simulation error: ${response.statusText}`)
+    console.log(`Simulation error code: ${response.status} - ${JSON.stringify(response.body)}`)
     process.exit(1)
   }
 
+  console.timeEnd('Simulate-shutdown')
+
   // Print the response with decoded internal transactions, address 
   // balance changes of ETH and tokens, and any errors in EVm execution
-  // console.log(JSON.stringify(data, 0, 2))
+  // console.log(JSON.stringify(response.body, null, 2))
+
+  // Print gasUsed for execution during certain block
+  console.log(`Simulation generated on blocknumber: ${response.body.simulatedBlockNumber}`)
+  console.log(`Gas used: ${response.body.gasUsed}`)
 
   // Blocknative's E2E latency
-  console.log(`End to end latency: ${data.simDetails.e2eMs}ms`)
+  console.log(`Blocknative's end to end latency: ${response.body.simDetails.e2eMs}ms`)
 }
 
 main()
