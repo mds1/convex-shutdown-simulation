@@ -10,5 +10,8 @@ bash scripts/benchmark-ganache.sh
 echo -e "\n--- BENCHMARKING HARDHAT ---"
 bash scripts/benchmark-hardhat.sh
 
+echo -e "\n--- BENCHMARKING BLOCKNATIVE ---"
+bash scripts/benchmark-blocknative.sh
+
 echo -e "\n--- BENCHMARKING TENDERLY ---"
 bash scripts/benchmark-tenderly.sh

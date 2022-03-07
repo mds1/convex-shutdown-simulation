@@ -3,4 +3,5 @@ benchmark-dapptools :; bash scripts/benchmark-dapptools.sh
 benchmark-foundry   :; bash scripts/benchmark-foundry.sh
 benchmark-ganache   :; bash scripts/benchmark-ganache.sh
 benchmark-hardhat   :; bash scripts/benchmark-hardhat.sh
+benchmark-blocknative :; bash scripts/benchmark-blocknative.sh
 benchmark-tenderly  :; bash scripts/benchmark-tenderly.sh
