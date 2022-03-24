@@ -4,6 +4,39 @@ This repository benchmarks performance of various Ethereum development
 frameworks by simulating a call to Convex's `systemShutdown` method. This method
 uses about 16M gas and performs a number of token transfers
 
+## Benchmarks
+
+Benchmarks were run at mainnet block 14,445,961. Blocknative only simulates against the latest block (support for simulation at historical blocks is planned), so the Blocknative simulation was run first and other benchmarks were run against the same block.
+
+Notes on benchmarks:
+- "Remote RPC" benchmarks used Alchemy as the RPC provider.
+- "Local RPC" benchmarks used a local Erigon node.
+- "Cached" benchmarks use RPC responses that the framework caches locally instead of making HTTP requests. We assume that since Blocknative and Tenderly are infrastructure providers, they aggressively cache and load hot data in-memory to improve performance, which is why their results are also in the "Cached" column.
+- Benchmarks were performed on macOS 11.6.2 with a 2.3 GHz 8-Core Intel Core i9 and 32 GB 2667 MHz DDR4.
+
+Notes on gas usage:
+- Ganache, Hardhat, and Tenderly all agree on gas usage after refunds and are therefore likely the truth value.
+- Blocknative's gas usage does not account for refunds as this is not yet supported by their platform.
+- Foundry and Dapptools exclude the 21,064 intrinsic gas from the reported gas used.
+
+| Framework   | Remote RPC | Local RPC  | Cached    |
+| ----------- | ---------- | ---------- | --------- |
+| Blocknative | N/A        | N/A        | 0m3.529s  |
+| Dapptools   | 52m17.447s | 17m34.869s | 3m25.896s |
+| Ganache     | 10m4.859s  | 0m57.387s  | 0m22.385s |
+| Hardhat     | 17m9.434s  | 1m20.667s  | 0m6.624s  |
+| Foundry     | 7m14.991s  | 0m20.031s  | 0m0.823s  |
+| Tenderly    | N/A        | N/A        | 0m17.805s |
+
+| Framework   | Gas Used   |
+| ----------- | ---------- |
+| Blocknative | 26,668,845 |
+| Dapptools   | 24,066,128 |
+| Ganache     | 22,580,009 |
+| Hardhat     | 22,580,009 |
+| Foundry     | 22,561,940 |
+| Tenderly    | 22,580,009 |
+
 ## Usage
 
 1. Run `cp .env.example .env`, and in the resulting `.env` file enter a URL to an Ethereum archive node in the `ETH_RPC_URL` environment variable. ([Alchemy](https://www.alchemy.com/) provides free archive node data). Also fill out the `TENDERLY_*` variables to benchmark the Tenderly API
@@ -20,33 +53,3 @@ uses about 16M gas and performs a number of token transfers
 
 - Set `export CLEAR_CACHE=1` in your `.env` file to clear the Ganache and Hardhat caches
 - Consider running the benchmarks via Docker. See the comment header in [the Dockerfile](./Dockerfile) for details.
-
-## Benchmarks
-
-Notes:
-- "Local, No Cache" refers to tools run on a local machine with a local node, where all data needed from the node is fetched on-demand
-- "Local, With Cache" refers to tools run on a local machine with a local node, where all data needed from the node was cached to disk on a previous run
-- "Cloud Based" refers to services that provide an API and run the simulation on their servers
-- Foundry does not cache RPC results to disk between runs, so the "Local, With Cache" column has been left as N/A
-- Ganache results are currently not shown due to a bug documented in issue [#7](https://github.com/mds1/convex-shutdown-simulation/issues/7)
-- If Tenderly returns a 400, it's because the simulation timed out which may happen if they don't have data cached on the servers. Attempting to run the simulation in their UI seems to resolve this
-- Blocknative simulates on tip block height currently, with archival node simulations are planned for historical simulation.
-- Local benchmarks were run against a local Erigon node on macOS 11.6.2 with a 2.3 GHz 8-Core Intel Core i9 and 32 GB 2667 MHz DDR4 (The goal is to benchmark tool performance, which is why a local node is used&mdash;if benchmarking against a remote node such as Infura or Alchemy, network calls become the driver of execution time)
-- Just because gas used differs between tools does not mean only one is correct. For example, Foundry and Dapptools exclude the 21,064 intrinsic gas from the reported gas used, but other tools may not. However, at this time it is not known which value is the truth value. Similarly, dapptools does not include refunds in their reported gas used
-
-| Framework | Local, No Cache | Local, With Cache | Cloud Based |
-| --------- | --------------- | ----------------- | ----------- |
-| Dapptools | TODO            | TODO              | N/A         |
-| Ganache   | TBD             | TBD               | N/A         |
-| Hardhat   | TODO            | TODO              | N/A         |
-| Foundry   | TODO            | N/A               | N/A         |
-| Tenderly  | N/A             | N/A               | TODO        |
-
-
-| Framework | Gas Used   |
-| --------- | ---------- |
-| Dapptools | 16,770,582 |
-| Ganache   | TBD        |
-| Hardhat   | 15,344,483 |
-| Foundry   | 15,515,306 |
-| Tenderly  | 15,537,677 |
