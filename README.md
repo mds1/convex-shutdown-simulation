@@ -28,7 +28,7 @@ Notes on benchmarks:
 | Blocknative | N/A        | N/A        | 0m3.529s  |
 | Dapptools   | 52m17.447s | 17m34.869s | 3m25.896s |
 | Ganache     | 10m5.384s  | 1m2.275s   | 0m22.662s |
-| Hardhat     | 8m26.483s  | 0m39.645s  | 0m15.390s |
+| Hardhat     | 8m26.483s  | 0m35.145s  | 0m7.531s  |
 | Foundry     | 7m14.991s  | 0m20.031s  | 0m0.823s  |
 | Tenderly    | N/A        | N/A        | 0m17.805s |
 
