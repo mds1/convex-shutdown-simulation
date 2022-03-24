@@ -12,7 +12,7 @@ async function main(): Promise<void> {
   // Impersonate owner
   const abi = ['function shutdownSystem() external', 'function owner() external view returns (address)'];
   const convex = new ethers.Contract('0xF403C135812408BFbE8713b5A23a04b3D48AAE31', abi, ethers.provider);
-  const ownerAddr = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK) });
+  const ownerAddr = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK), gasLimit: process.env.GAS_LIMIT });
   await network.provider.request({ method: 'hardhat_impersonateAccount', params: [ownerAddr] });
   const owner = await ethers.getSigner(ownerAddr);
 

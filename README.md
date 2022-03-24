@@ -14,19 +14,29 @@ Notes on benchmarks:
 - "Cached" benchmarks use RPC responses that the framework caches locally instead of making HTTP requests. We assume that since Blocknative and Tenderly are infrastructure providers, they aggressively cache and load hot data in-memory to improve performance, which is why their results are also in the "Cached" column.
 - Benchmarks were performed on macOS 11.6.2 with a 2.3 GHz 8-Core Intel Core i9 and 32 GB 2667 MHz DDR4.
 
-Notes on gas usage:
-- Ganache, Hardhat, and Tenderly all agree on gas usage after refunds and are therefore likely the truth value.
-- Blocknative's gas usage does not account for refunds as this is not yet supported by their platform.
-- Foundry and Dapptools exclude the 21,064 intrinsic gas from the reported gas used.
+| Framework   | Version                                                |
+| ----------- | ------------------------------------------------------ |
+| Blocknative | HTTP request on 2021-03-23                             |
+| Dapptools   | dapp 0.35.0, hevm 0.49.0                               |
+| Ganache     | 7.0.3                                                  |
+| Hardhat     | 2.9.2                                                  |
+| Foundry     | forge 0.1.0 (b6240b2 2022-03-23T19:12:47.768234+00:00) |
+| Tenderly    | HTTP request on 2021-03-23                             |
 
 | Framework   | Remote RPC | Local RPC  | Cached    |
 | ----------- | ---------- | ---------- | --------- |
 | Blocknative | N/A        | N/A        | 0m3.529s  |
 | Dapptools   | 52m17.447s | 17m34.869s | 3m25.896s |
-| Ganache     | 10m4.859s  | 0m57.387s  | 0m22.385s |
-| Hardhat     | 17m9.434s  | 1m20.667s  | 0m6.624s  |
+| Ganache     | 10m5.384s  | 1m2.275s   | 0m22.662s |
+| Hardhat     | 8m26.483s  | 0m39.645s  | 0m15.390s |
 | Foundry     | 7m14.991s  | 0m20.031s  | 0m0.823s  |
 | Tenderly    | N/A        | N/A        | 0m17.805s |
+
+Notes on gas usage:
+- Ganache, Hardhat, and Tenderly all agree on gas usage after refunds and are therefore likely the truth value.
+- Foundry usage matches those values: The debugger shows the actual call costs 22,558,945 gas. Adding 21,000 intrinsic gas and 64 gas for calldata (both are excluded from the reported gas number by default) gives the same amount reported by Hardhat and others. The remaining 2995 gas is overhead from the contract based setup and Solidity-generated call checks.
+- Blocknative's gas usage does not account for refunds as this is not yet supported by their platform.
+- Dapptools' gas usage also does not account for refunds.
 
 | Framework   | Gas Used   |
 | ----------- | ---------- |
