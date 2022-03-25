@@ -20,7 +20,7 @@ Notes on benchmarks:
 | Dapptools   | dapp 0.35.0, hevm 0.49.0                               |
 | Ganache     | 7.0.3                                                  |
 | Hardhat     | 2.9.2                                                  |
-| Foundry     | forge 0.1.0 (b6240b2 2022-03-23T19:12:47.768234+00:00) |
+| Foundry     | forge 0.2.0 (f91c5aa 2022-03-25T13:04:13.807499+00:00) |
 | Tenderly    | HTTP request on 2021-03-23                             |
 
 | Framework   | Remote RPC | Local RPC  | Cached    |
@@ -29,7 +29,7 @@ Notes on benchmarks:
 | Dapptools   | 52m17.447s | 17m34.869s | 3m25.896s |
 | Ganache     | 10m5.384s  | 1m2.275s   | 0m22.662s |
 | Hardhat     | 8m26.483s  | 0m35.145s  | 0m7.531s  |
-| Foundry     | 7m14.991s  | 0m20.031s  | 0m0.823s  |
+| Foundry     | 6m59.875s  | 0m13.610s  | 0m0.537s  |
 | Tenderly    | N/A        | N/A        | 0m17.805s |
 
 Notes on gas usage:
