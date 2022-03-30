@@ -8,6 +8,7 @@ cache
 artifacts/
 build/
 cache/
+cache-dapptools/
 coverage/
 dist/
 lib/
