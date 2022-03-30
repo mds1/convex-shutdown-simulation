@@ -9,7 +9,7 @@ uses about 16M gas and performs a number of token transfers
 Benchmarks were run at mainnet block 14,445,961. Blocknative only simulates against the latest block (support for simulation at historical blocks is planned), so the Blocknative simulation was run first and other benchmarks were run against the same block.
 
 Notes on benchmarks:
-- "Remote RPC" benchmarks used Alchemy as the RPC provider.
+- "Remote RPC" benchmarks used Alchemy as the RPC provider, connected over HTTPS.
 - "Local RPC" benchmarks used a local Erigon node.
 - "Cached" benchmarks use RPC responses that the framework caches locally instead of making HTTP requests. We assume that since Blocknative and Tenderly are infrastructure providers, they aggressively cache and load hot data in-memory to improve performance, which is why their results are also in the "Cached" column.
 - Benchmarks were performed on macOS 11.6.2 with a 2.3 GHz 8-Core Intel Core i9 and 32 GB 2667 MHz DDR4.
