@@ -30,7 +30,7 @@ Notes on benchmarks:
 | Ganache     | 10m5.384s  | 1m2.275s   | 0m22.662s |
 | Hardhat     | 8m26.483s  | 0m35.145s  | 0m7.531s  |
 | Foundry     | 6m59.875s  | 0m13.610s  | 0m0.537s  |
-| Tenderly    | N/A        | N/A        | 0m5.259s  |
+| Tenderly    | N/A        | N/A        | 0m1.9315s |
 
 Notes on gas usage:
 - Ganache, Hardhat, and Tenderly all agree on gas usage after refunds and are therefore likely the truth value.
