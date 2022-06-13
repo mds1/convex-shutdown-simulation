@@ -79,7 +79,7 @@ async function prepareGanache({
   ganache: ReturnType<typeof Ganache.provider>;
   provider: ethers.providers.JsonRpcProvider;
 }> {
-  const ganache = Ganache.provider({
+  const options: ProviderOptions = {
     fork: {
       url,
       blockNumber,
@@ -91,10 +91,12 @@ async function prepareGanache({
     },
     logging: {
       quiet: false,
-    },
-    legacyInstamine: true,
-  });
+    }
+  }
+  
+  const ganache = Ganache.provider(options);
 
+  // @ts-ignore currently ethers doesn't like ganache's provider type
   const provider = new ethers.providers.Web3Provider(ganache);
 
   return { ganache, provider };
