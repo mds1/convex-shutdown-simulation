@@ -49,20 +49,8 @@ async function main(): Promise<void> {
   console.log(chalk.bold('Simulating shutdown...'));
   console.time('simulate-shutdown');
   console.group();
-
-  // ganache uses the user's time for the block timestamp, and allows for 
-  // manually setting the block time. here we set it manually to be that of 
-  // the fork block to make sure results can be consistently reproduced (the
-  // contract method being called's gas usage depends on the timestamp). to
-  // manually set the timestamp, we get the fork  block's time, stop the miner, 
-  // send our transaction, and run evm_mine, which allows us to mine a block 
-  // and set the exact timestamp of the block
-  const forkBlock = await provider.getBlock(blockNumber);
-  // block timestamp in seconds, add one second
-  const timestamp = (forkBlock.timestamp + 1) 
-  await provider.send("miner_stop", []);
+  
   const tx = await convex.connect(owner).shutdownSystem({ gasLimit: blockGasLimit });
-  await provider.send("evm_mine", [timestamp]);
 
   const receipt = await provider.waitForTransaction(tx.hash);
   assert.ok(receipt.status, `transaction failed. receipt: ${JSON.stringify(receipt)}`);
@@ -100,7 +88,12 @@ async function prepareGanache({
     },
     miner: { 
       blockGasLimit, 
-      instamine: "eager" 
+      instamine: "eager",
+      // this option, introduced in v7.3.0 of Ganache, fixes a potential fail case in this test
+      // this option causes the block's timestamp after forking to be forkBlockTimestamp + 1 second
+      // previously, Ganache would use the user's computer time, which would cause large gas usage
+      // when calling the contract
+      timestampIncrement: 1 
     },
     wallet: {
       defaultBalance
@@ -108,6 +101,7 @@ async function prepareGanache({
     logging: {
       quiet: false,
     }
+  };
 
   const ganache = Ganache.provider(options);
 
