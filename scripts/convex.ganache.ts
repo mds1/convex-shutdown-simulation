@@ -8,7 +8,8 @@ const url = process.env.ETH_RPC_URL || 'mainnet';
 const deleteCache = process.env.CLEAR_CACHE && Number(process.env.CLEAR_CACHE) === 1 || false;
 const blockGasLimit = ethers.BigNumber.from(process.env.GAS_LIMIT).toHexString();
 const blockNumber = Number(process.env.FORK_BLOCK);
-const defaultBalance = '0xffffffffffffffffffffff';
+// ganache expects the default balance in ETH as a number
+const defaultBalance = 0x12725DD1;
 const targetBalance = '0xffffffffffffffffffff';
 const convexAddress = '0xF403C135812408BFbE8713b5A23a04b3D48AAE31';
 const convexAbi = ['function shutdownSystem() external', 'function owner() external view returns (address)'];
@@ -64,7 +65,7 @@ interface PrepareGanacheOptions {
   url: string;
   blockNumber: 'latest' | number;
   blockGasLimit: string;
-  defaultBalance: string;
+  defaultBalance: number;
   deleteCache: boolean;
 }
 
@@ -86,8 +87,7 @@ async function prepareGanache({
     },
     miner: { blockGasLimit },
     wallet: {
-      // ganache expects value in ETH
-      defaultBalance: ethers.utils.formatEther(defaultBalance),
+      defaultBalance
     },
     logging: {
       quiet: false,
