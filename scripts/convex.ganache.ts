@@ -5,7 +5,7 @@ import * as ethers from 'ethers';
 import Ganache, {ProviderOptions} from 'ganache';
 
 const url = process.env.ETH_RPC_URL || 'mainnet';
-const deleteCache = process.env.CLEAR_CACHE && Number(process.env.CLEAR_CACHE) === 1;
+const deleteCache = process.env.CLEAR_CACHE && Number(process.env.CLEAR_CACHE) === 1 || false;
 const blockGasLimit = ethers.BigNumber.from(process.env.GAS_LIMIT).toHexString();
 const blockNumber = Number(process.env.FORK_BLOCK);
 const defaultBalance = '0xffffffffffffffffffffff';
