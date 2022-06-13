@@ -58,7 +58,7 @@ async function main(): Promise<void> {
   console.timeEnd('simulate-shutdown');
   console.log('');
 
-  // @ts-ignore looks like ganche has a bad typing
+  // @ts-ignore looks like ganache has a bad typing
   await ganache.disconnect();
 }
 
