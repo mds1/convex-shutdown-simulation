@@ -28,11 +28,16 @@ async function main(): Promise<void> {
       gas_price: '0',
       value: '0',
       save: false,
+      use_cache: true,
+      simulation_type: 'raw', // 'full' uses contract source code for a more detailed trace and is slower
     },
   };
+
+  console.time('Simulate-shutdown')
   const sim = await fetchUrl(simUrl, fetchOptions);
   assert.ok(sim.transaction.status, `transaction failed. response: ${JSON.stringify(sim)}`);
   console.log('Gas used:', sim.transaction.gas_used);
+  console.timeEnd('Simulate-shutdown')
 }
 
 main()

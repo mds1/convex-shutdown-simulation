@@ -31,7 +31,7 @@ async function main(): Promise<void> {
   });
 
   const convex = new ethers.Contract(convexAddress, convexAbi, provider);
-  const ownerAddress = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK) });
+  const ownerAddress = await convex.owner({ blockTag: Number(process.env.FORK_BLOCK), gasLimit: blockGasLimit });
 
   await fundAccounts({ provider, accounts: [convexAddress, ownerAddress], amount: targetBalance });
 
