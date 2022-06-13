@@ -2,7 +2,7 @@ import * as assert from 'assert';
 
 const chalk: any = require('chalk');
 import * as ethers from 'ethers';
-import Ganache from 'ganache';
+import Ganache, {ProviderOptions} from 'ganache';
 
 const url = process.env.ETH_RPC_URL || 'mainnet';
 const deleteCache = process.env.CLEAR_CACHE && Number(process.env.CLEAR_CACHE) === 1;
