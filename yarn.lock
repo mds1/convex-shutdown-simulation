@@ -1121,7 +1121,7 @@
     "@types/level-errors" "*"
     "@types/node" "*"
 
-"@types/lru-cache@^5.1.0":
+"@types/lru-cache@5.1.1", "@types/lru-cache@^5.1.0":
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/@types/lru-cache/-/lru-cache-5.1.1.tgz#c48c2e27b65d2a153b19bfc1a317e30872e01eef"
   integrity sha512-ssE3Vlrys7sdIzs5LOxCzTVMsU7i9oa/IaW92wF32JFb3CVczqOkru2xspuKczHEbG3nvmPY7IFqVmGGHdNbYw==
@@ -1176,6 +1176,11 @@
   integrity sha512-Da66lEIFeIz9ltsdMZcpQvmrmmoqrfju8pm1BH8WbYjZSwUgCwXLb9C+9XYogwBITnbsSaMdVPb2ekf7TV+03w==
   dependencies:
     "@types/node" "*"
+
+"@types/seedrandom@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/seedrandom/-/seedrandom-3.0.1.tgz#1254750a4fec4aff2ebec088ccd0bb02e91fedb4"
+  integrity sha512-giB9gzDeiCeloIXDgzFBCgjj1k4WxcDrZtGl6h1IqmUPlxF+Nx8Ve+96QCyDZ/HseB/uvDsKbpib9hU5cU53pw==
 
 "@types/sinon-chai@^3.2.3":
   version "3.2.6"
@@ -4096,12 +4101,16 @@ ganache-core@^2.13.2:
     ethereumjs-wallet "0.6.5"
     web3 "1.2.11"
 
-ganache@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/ganache/-/ganache-7.0.3.tgz#c90a28b039378d2e1b5d9623b354969a1d877070"
-  integrity sha512-1O4V38YkAFd2B1YfBevauEepxEtoN0iTTK02SUJPUIcLOnxwrR49lSDq7liKpUWLkoZCOC2Bkrz/+XJAmEoNAQ==
+ganache@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/ganache/-/ganache-7.3.0.tgz#45c856dbd3f602a02c1fa4dcf959586d620e7f7d"
+  integrity sha512-FPfMsmYUiE4E0fxoqu9owdsfcA7xGz4dUrRvaucXvFgJL3Bh/JBqcGDRQajpqmu8v4hGs94NlJOVlD0Zm69uCA==
   dependencies:
     "@trufflesuite/bigint-buffer" "1.1.9"
+    "@types/bn.js" "^5.1.0"
+    "@types/lru-cache" "5.1.1"
+    "@types/seedrandom" "3.0.1"
+    emittery "0.10.0"
     keccak "3.0.1"
     leveldown "5.6.0"
     secp256k1 "4.0.2"
