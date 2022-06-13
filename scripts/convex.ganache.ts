@@ -49,6 +49,7 @@ async function main(): Promise<void> {
   console.log(chalk.bold('Simulating shutdown...'));
   console.time('simulate-shutdown');
   console.group();
+  
   const tx = await convex.connect(owner).shutdownSystem({ gasLimit: blockGasLimit });
 
   const receipt = await provider.waitForTransaction(tx.hash);
@@ -85,15 +86,23 @@ async function prepareGanache({
       blockNumber,
       deleteCache,
     },
-    miner: { blockGasLimit },
+    miner: { 
+      blockGasLimit, 
+      instamine: "eager",
+      // this option, introduced in v7.3.0 of Ganache, fixes a potential fail case in this test
+      // this option causes the block's timestamp after forking to be forkBlockTimestamp + 1 second
+      // previously, Ganache would use the user's computer time, which would cause large gas usage
+      // when calling the contract
+      timestampIncrement: 1 
+    },
     wallet: {
       defaultBalance
     },
     logging: {
       quiet: false,
     }
-  }
-  
+  };
+
   const ganache = Ganache.provider(options);
 
   // @ts-ignore currently ethers doesn't like ganache's provider type
