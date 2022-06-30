@@ -27,7 +27,7 @@ Notes on benchmarks:
 | ----------- | ---------- | ---------- | --------- |
 | Blocknative | N/A        | N/A        | 0m3.529s  |
 | Dapptools   | 52m17.447s | 17m34.869s | 3m25.896s |
-| Ganache     | 10m5.384s  | 1m2.275s   | 0m22.662s |
+| Ganache     | 7m29.919s  | 0m43.095s  | 0m23.636s |
 | Hardhat     | 8m26.483s  | 0m35.145s  | 0m7.531s  |
 | Foundry     | 6m59.875s  | 0m13.610s  | 0m0.537s  |
 | Tenderly    | N/A        | N/A        | 0m1.9315s |
@@ -51,7 +51,7 @@ Notes on gas usage:
 
 1. Run `cp .env.example .env`, and in the resulting `.env` file enter a URL to an Ethereum archive node in the `ETH_RPC_URL` environment variable. ([Alchemy](https://www.alchemy.com/) provides free archive node data). Also fill out the `TENDERLY_*` variables to benchmark the Tenderly API
 
-2. Run `yarn` to install dependencies for Ganache and Hardhat 
+2. Run `yarn` to install dependencies for Ganache and Hardhat
 
 3. Install Foundry's forge and Dapptools using the installation instructions[here](https://github.com/gakonst/foundry/) and [here](https://github.com/dapphub/dapptools/) respectively
 
