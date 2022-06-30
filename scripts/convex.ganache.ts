@@ -2,13 +2,14 @@ import * as assert from 'assert';
 
 const chalk: any = require('chalk');
 import * as ethers from 'ethers';
-import Ganache from 'ganache';
+import Ganache, {ProviderOptions} from 'ganache';
 
 const url = process.env.ETH_RPC_URL || 'mainnet';
-const deleteCache = process.env.CLEAR_CACHE && Number(process.env.CLEAR_CACHE) === 1;
+const deleteCache = process.env.CLEAR_CACHE && Number(process.env.CLEAR_CACHE) === 1 || false;
 const blockGasLimit = ethers.BigNumber.from(process.env.GAS_LIMIT).toHexString();
 const blockNumber = Number(process.env.FORK_BLOCK);
-const defaultBalance = '0xffffffffffffffffffffff';
+// ganache expects the default balance in ETH as a number
+const defaultBalance = 0x12725DD1;
 const targetBalance = '0xffffffffffffffffffff';
 const convexAddress = '0xF403C135812408BFbE8713b5A23a04b3D48AAE31';
 const convexAbi = ['function shutdownSystem() external', 'function owner() external view returns (address)'];
@@ -48,6 +49,7 @@ async function main(): Promise<void> {
   console.log(chalk.bold('Simulating shutdown...'));
   console.time('simulate-shutdown');
   console.group();
+  
   const tx = await convex.connect(owner).shutdownSystem({ gasLimit: blockGasLimit });
 
   const receipt = await provider.waitForTransaction(tx.hash);
@@ -56,7 +58,7 @@ async function main(): Promise<void> {
   console.timeEnd('simulate-shutdown');
   console.log('');
 
-  // @ts-ignore looks like ganche has a bad typing
+  // @ts-ignore looks like ganache has a bad typing
   await ganache.disconnect();
 }
 
@@ -64,7 +66,7 @@ interface PrepareGanacheOptions {
   url: string;
   blockNumber: 'latest' | number;
   blockGasLimit: string;
-  defaultBalance: string;
+  defaultBalance: number;
   deleteCache: boolean;
 }
 
@@ -78,23 +80,32 @@ async function prepareGanache({
   ganache: ReturnType<typeof Ganache.provider>;
   provider: ethers.providers.JsonRpcProvider;
 }> {
-  const ganache = Ganache.provider({
+  const options: ProviderOptions = {
     fork: {
       url,
       blockNumber,
       deleteCache,
     },
-    miner: { blockGasLimit },
+    miner: { 
+      blockGasLimit, 
+      instamine: "eager",
+      // this option, introduced in v7.3.0 of Ganache, fixes a potential fail case in this test
+      // this option causes the block's timestamp after forking to be forkBlockTimestamp + 1 second
+      // previously, Ganache would use the user's computer time, which would cause large gas usage
+      // when calling the contract
+      timestampIncrement: 1 
+    },
     wallet: {
-      // ganache expects value in ETH
-      defaultBalance: ethers.utils.formatEther(defaultBalance),
+      defaultBalance
     },
     logging: {
       quiet: false,
-    },
-    legacyInstamine: true,
-  });
+    }
+  };
 
+  const ganache = Ganache.provider(options);
+
+  // @ts-ignore currently ethers doesn't like ganache's provider type
   const provider = new ethers.providers.Web3Provider(ganache);
 
   return { ganache, provider };
