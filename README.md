@@ -18,7 +18,7 @@ Notes on benchmarks:
 | ----------- | ------------------------------------------------------ |
 | Blocknative | HTTP request on 2021-03-23                             |
 | Dapptools   | dapp 0.35.0, hevm 0.49.0                               |
-| Ganache     | 7.0.3                                                  |
+| Ganache     | 7.5.0                                                  |
 | Hardhat     | 2.9.2                                                  |
 | Foundry     | forge 0.2.0 (f91c5aa 2022-03-25T13:04:13.807499+00:00) |
 | Tenderly    | HTTP request on 2021-03-23                             |
