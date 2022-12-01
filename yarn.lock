@@ -1049,12 +1049,12 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@trufflesuite/bigint-buffer@1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@trufflesuite/bigint-buffer/-/bigint-buffer-1.1.9.tgz#e2604d76e1e4747b74376d68f1312f9944d0d75d"
-  integrity sha512-bdM5cEGCOhDSwminryHJbRmXc1x7dPKg6Pqns3qyTwFlxsqUgxE29lsERS3PlIW1HTjoIGMUqsk1zQQwST1Yxw==
+"@trufflesuite/bigint-buffer@1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@trufflesuite/bigint-buffer/-/bigint-buffer-1.1.10.tgz#a1d9ca22d3cad1a138b78baaf15543637a3e1692"
+  integrity sha512-pYIQC5EcMmID74t26GCC67946mgTJFiLXOT/BYozgrd4UEY2JHEGLhWi9cMiQCt5BSqFEvKkCHNnoj82SRjiEw==
   dependencies:
-    node-gyp-build "4.3.0"
+    node-gyp-build "4.4.0"
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.8"
@@ -3064,7 +3064,7 @@ electron-to-chromium@^1.3.47:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.8.tgz#e1b7752ac1a75e39b5dd90cc7e29ea08b351c484"
   integrity sha512-Cu5+dbg55+1E3ohlsa8HT0s4b8D0gBewXEGG8s5wBl8ynWv60VuvYW25GpsOeTVXpulhyU/U8JYZH+yxASSJBQ==
 
-elliptic@6.5.4, elliptic@^6.4.0, elliptic@^6.5.2, elliptic@^6.5.3:
+elliptic@6.5.4, elliptic@^6.4.0, elliptic@^6.5.2, elliptic@^6.5.3, elliptic@^6.5.4:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
   integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
@@ -4121,19 +4121,19 @@ ganache-core@^2.13.2:
     ethereumjs-wallet "0.6.5"
     web3 "1.2.11"
 
-ganache@^7.3.0:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/ganache/-/ganache-7.3.0.tgz#45c856dbd3f602a02c1fa4dcf959586d620e7f7d"
-  integrity sha512-FPfMsmYUiE4E0fxoqu9owdsfcA7xGz4dUrRvaucXvFgJL3Bh/JBqcGDRQajpqmu8v4hGs94NlJOVlD0Zm69uCA==
+ganache@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/ganache/-/ganache-7.5.0.tgz#f7a36050b6ff85e5557d6511ddca470a0a40f37c"
+  integrity sha512-afNTJYBEaFrLPRrn7eUxH39TgnrffvHn/4T6THzQrc3rpfe4DOxw2nY2XEQxfsq1t4OqKSXtxomzyo26RZiOzw==
   dependencies:
-    "@trufflesuite/bigint-buffer" "1.1.9"
+    "@trufflesuite/bigint-buffer" "1.1.10"
     "@types/bn.js" "^5.1.0"
     "@types/lru-cache" "5.1.1"
     "@types/seedrandom" "3.0.1"
     emittery "0.10.0"
-    keccak "3.0.1"
+    keccak "3.0.2"
     leveldown "6.1.0"
-    secp256k1 "4.0.2"
+    secp256k1 "4.0.3"
   optionalDependencies:
     bufferutil "4.0.5"
     utf-8-validate "5.0.7"
@@ -5124,7 +5124,7 @@ keccak@3.0.1:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
 
-keccak@^3.0.0:
+keccak@3.0.2, keccak@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/keccak/-/keccak-3.0.2.tgz#4c2c6e8c54e04f2670ee49fa734eb9da152206e0"
   integrity sha512-PyKKjkH53wDMLGrvmRGSNWgmSxZOUqbnXwKL9tmgbFYA1iAYqW21kfR7mZXV0MlESiefxQQE9X9fTa3X+2MPDQ==
@@ -5968,7 +5968,12 @@ node-fetch@~1.7.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-gyp-build@4.3.0, node-gyp-build@^4.2.0, node-gyp-build@^4.3.0:
+node-gyp-build@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.4.0.tgz#42e99687ce87ddeaf3a10b99dc06abc11021f3f4"
+  integrity sha512-amJnQCcgtRVw9SvoebO3BKGESClrfXGCUTX9hSn1OuGQTQBOZmVd0Z0OlecpuRksKvbsUqALE8jls/ErClAPuQ==
+
+node-gyp-build@^4.2.0, node-gyp-build@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.3.0.tgz#9f256b03e5826150be39c764bf51e993946d71a3"
   integrity sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==
@@ -6890,7 +6895,16 @@ scryptsy@^1.2.1:
   dependencies:
     pbkdf2 "^3.0.3"
 
-secp256k1@4.0.2, secp256k1@^4.0.1:
+secp256k1@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-4.0.3.tgz#c4559ecd1b8d3c1827ed2d1b94190d69ce267303"
+  integrity sha512-NLZVf+ROMxwtEj3Xa562qgv2BK5e2WNmXPiOdVIPLgs6lyTzMvBq0aWTYMI5XCP9jZMVKOcqZLw/Wc4vDkuxhA==
+  dependencies:
+    elliptic "^6.5.4"
+    node-addon-api "^2.0.0"
+    node-gyp-build "^4.2.0"
+
+secp256k1@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-4.0.2.tgz#15dd57d0f0b9fdb54ac1fa1694f40e5e9a54f4a1"
   integrity sha512-UDar4sKvWAksIlfX3xIaQReADn+WFnHvbVujpcbr+9Sf/69odMwy2MUsz5CKLQgX9nsIyrjuxL2imVyoNHa3fg==
