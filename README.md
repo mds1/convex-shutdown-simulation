@@ -9,7 +9,7 @@ uses about 16M gas and performs a number of token transfers
 Benchmarks were run at mainnet block 14,445,961. Blocknative only simulates against the latest block (support for simulation at historical blocks is planned), so the Blocknative simulation was run first and other benchmarks were run against the same block.
 
 Notes on benchmarks:
-- "Remote RPC" benchmarks used Alchemy as the RPC provider, connected over HTTPS.
+- "Remote RPC" benchmarks used Alchemy as the RPC provider, connected over HTTP.
 - "Local RPC" benchmarks used a local Erigon node.
 - "Cached" benchmarks use RPC responses that the framework caches locally instead of making HTTP requests. We assume that since Blocknative and Tenderly are infrastructure providers, they aggressively cache and load hot data in-memory to improve performance, which is why their results are also in the "Cached" column.
 - Benchmarks were performed on macOS 11.6.2 with a 2.3 GHz 8-Core Intel Core i9 and 32 GB 2667 MHz DDR4.
@@ -18,18 +18,18 @@ Notes on benchmarks:
 | ----------- | ------------------------------------------------------ |
 | Blocknative | HTTP request on 2021-03-23                             |
 | Dapptools   | dapp 0.35.0, hevm 0.49.0                               |
-| Ganache     | 7.0.3                                                  |
-| Hardhat     | 2.9.2                                                  |
-| Foundry     | forge 0.2.0 (f91c5aa 2022-03-25T13:04:13.807499+00:00) |
+| Ganache     | 7.5.0                                                  |
+| Hardhat     | 2.12.3                                                 |
+| Foundry     | forge 0.2.0 (250cc85 2022-12-02T00:18:26.200251Z)      |
 | Tenderly    | HTTP request on 2021-03-23                             |
 
 | Framework   | Remote RPC | Local RPC  | Cached    |
 | ----------- | ---------- | ---------- | --------- |
 | Blocknative | N/A        | N/A        | 0m3.529s  |
 | Dapptools   | 52m17.447s | 17m34.869s | 3m25.896s |
-| Ganache     | 7m29.919s  | 0m43.095s  | 0m23.636s |
-| Hardhat     | 8m26.483s  | 0m35.145s  | 0m7.531s  |
-| Foundry     | 6m59.875s  | 0m13.610s  | 0m0.537s  |
+| Ganache     | 7m24.070s  | 0m29.631s  | 0m15.665s |
+| Hardhat     | 6m17.896s  | 0m25.642s  | 0m9.110s  |
+| Foundry     | 5m55.141s  | 0m11.606s  | 0m0.999s  |
 | Tenderly    | N/A        | N/A        | 0m1.9315s |
 
 Notes on gas usage:
